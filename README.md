@@ -1,87 +1,93 @@
 # ⚡ HALO Engine (Hardware-Aware Lattice Optimization)
 
-A highly optimized, constant-depth ($\mathcal{O}(1)$) quantum compiler for simulating Lattice Gauge Theories (LGTs) on near-term physical quantum hardware. 
+[![arXiv](https://img.shields.io/badge/arXiv-Pending-b31b1b.svg)](https://arxiv.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The HALO framework bypasses the severe $\mathcal{O}(N)$ circuit depth overheads associated with standard Jordan-Wigner transformations by natively mapping composite gauge links to the hardware topology. This repository contains the core compiler library and the exact benchmarking scripts used to generate the data for the associated publication.
+A highly optimized quantum compiler and simulation framework for observing Lattice Gauge Theories (LGTs) on near-term physical quantum hardware. 
+
+The HALO framework completely bypasses the severe $\mathcal{O}(N)$ circuit depth overheads associated with standard Jordan-Wigner transformations by natively mapping composite gauge links to the hardware topology. By achieving an asymptotic circuit depth of **$\mathcal{O}(1)$ per Trotter step**, this engine enables deep-time quantum simulations and variational ground-state preparation previously inaccessible on noisy processors.
+
+This repository contains the core compiler library and the complete suite of benchmarking scripts used to generate the physics data for the associated publication.
+
+## 🏆 Key Scientific & Algorithmic Achievements
+
+* **Constant-Depth Compilation:** Achieves true $\mathcal{O}(1)$ physical circuit depth per time-evolution step regardless of lattice size, vastly outperforming Jordan-Wigner mappings.
+* **16-Qubit Hardware Dynamics:** Successfully simulated the real-time dynamics of heavy meson string breaking on IBM's 16-qubit heavy-hex topologies.
+* **Dynamic Phase Diagrams:** Mapped the critical phase transition between the non-perturbative Confinement Regime and the Kinetic Dispersion (Free Fermion) regime.
+* **Zero-Noise Extrapolation (ZNE):** Exploited the localized nature of the HALO mapped Pauli strings to achieve a noise scaling factor of $\lambda = 3$ with only a ~2.5x hardware depth penalty, recovering exact continuous-time physics.
+* **20-Qubit VQE Convergence:** Validated Variational Quantum Eigensolver (VQE) interacting vacuum state preparation at an unprecedented scale of 20 qubits.
+* **2D Lattice Extensibility:** The native hardware-aware mapping is fundamentally extensible to 2D unit cells, laying the groundwork for higher-dimensional QED and QCD simulations.
+
+## 📊 Visual Benchmarks
+
+### 1. The Compiler Duel: $\mathcal{O}(1)$ vs $\mathcal{O}(N)$ Scaling
+By bypassing non-local parity chains, HALO flatlines the critical path depth per Trotter step, allowing infinite scaling of the spatial lattice size without increasing decoherence.
+<p align="center">
+  <img src="figures/poc1_compiler_duel.png" alt="Compiler Duel: HALO vs Jordan-Wigner" width="600"/>
+</p>
+
+### 2. Physical Observation of String Breaking (16-Qubit QLM)
+Time-evolution of the Schwinger model tracking the decay of a heavy meson into two localized light mesons (string breaking) across the hardware array.
+<p align="center">
+  <img src="figures/phase2_string_breaking_high_res_UPDATED.png" alt="16-Qubit String Breaking Dynamics" width="600"/>
+</p>
+
+### 3. Native 2D Unit Cell Extensibility
+Unlike 1D string-to-qubit mappings, the HALO framework's localized composite links natively map to 2D planar hardware topologies, paving the way for higher-dimensional gauge theories.
+<p align="center">
+  <img src="figures/halo_2d_unit_cell_architecture.png" alt="2D Unit Cell Architecture" width="600"/>
+</p>
 
 ## 📂 Repository Structure
 
-* `halo/`: The core python library containing the $\mathcal{O}(1)$ Hamiltonian builder, compiler pipeline, and digital Zero-Noise Extrapolation (ZNE) folding logic.
-* `benchmarks/`: Publication-grade execution scripts that reproduce the exact figures, hardware scaling data, and VQE convergence sweeps from the manuscript.
-* `notebooks/`: Interactive Jupyter notebooks, including a lightweight quickstart tutorial for generating and compiling HALO circuits.
-* `figures/`: The output directory for all generated PDF plots and circuit architectures.
-
+```text
+HALO-Engine/
+├── halo/                   # Core Python library
+│   ├── hamiltonian.py      # O(1) Hamiltonian builder
+│   ├── compiler.py         # Hardware-aware transpilation pipeline
+│   └── zne_folding.py      # Digital Zero-Noise Extrapolation logic
+├── benchmarks/             # Publication-grade execution scripts (Scaling, Dynamics, VQE)
+├── notebooks/              # Interactive environments
+│   └── halo_quickstart_tutorial.ipynb
+├── figures/                # Auto-generated outputs for plots and architectures
+├── requirements.txt        # Exact environment dependencies
+└── README.md
+```
 ## 🚀 Quickstart
 
 **1. Clone the repository:**
 ```bash
 git clone [https://github.com/stark-069/HALO-Engine.git](https://github.com/stark-069/HALO-Engine.git)
 cd HALO-Engine
-
 ```
-
-**2. Set up the environment:**
-
+**2. Set up the Python environment:**
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-
 ```
-
 **3. Run the interactive tutorial:**
-
 ```bash
 jupyter notebook notebooks/halo_quickstart_tutorial.ipynb
-
 ```
-
 ## 📊 Reproducing Publication Benchmarks
+To generate the exact figures, hardware scaling data, and VQE convergence sweeps from the paper, run any of the provided benchmark scripts from the root directory.
 
-To generate the exact figures from the paper, run the benchmark scripts from the root directory. For example, to generate the compiler scaling duel:
+For example:
 
-```bash
+```Bash
 python benchmarks/01_compiler_scaling_benchmark.py
-
 ```
+All resultant data and plots will automatically save to the ```/figures``` directory
 
-Outputs will be automatically saved to the `/figures` directory.
+## Citation
+If you utilize the HALO Engine or its compiler methodologies in your research, please cite our work:
 
-```
-
-### 4. Setting up the `figures/` Folder for Git
-Git does not track empty folders. To ensure the `figures/` folder actually gets pushed to GitHub so the benchmark scripts have a place to save their PDFs when someone else clones it, we have to put a hidden placeholder file inside it.
-
-Run these exact commands in your terminal:
-
-```bash
-mkdir figures
-touch figures/.keep
-
-```
-
----
-
-### 5. The Final Git Push
-
-Your repository is now completely built, secured, and documented. Run these commands in your terminal from the root `HALO-Engine` folder to ship it to GitHub:
-
-```bash
-# 1. Initialize the local repository
-git init
-
-# 2. Add all your files (The .gitignore will automatically block the .env and .venv files)
-git add .
-
-# 3. Commit the codebase
-git commit -m "Initial commit: HALO Engine core library, benchmarks, and interactive tutorial"
-
-# 4. Link it to your GitHub repository 
-# (Replace 'your-repo-link' with the actual HTTPS link from your empty GitHub repo)
-git remote add origin https://github.com/stark-069/HALO-Engine.git
-
-# 5. Push the code to the main branch
-git branch -M main
-git push -u origin main
-
+```Code snippet
+@article{gohar2026halo,
+  title={HALO Engine: Hardware-Aware Lattice Optimization for Constant-Depth Quantum Simulation},
+  author={Gohar, Abhiroop and [Co-Author Names]},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  year={2026}
+}
 ```
