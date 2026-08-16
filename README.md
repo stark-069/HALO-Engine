@@ -92,3 +92,13 @@ If you utilize the HALO Engine, its compiler methodologies, or the physical data
   year={2026}
 }
 ```
+## Author & Contact
+
+**Abhiroop Gohar**  
+*Undergraduate, Engineering Physics*  
+*Indian Institute of Technology (IIT) Indore*  
+
+For academic collaborations, discussions regarding the HALO framework, or research opportunities, feel free to reach out:
+
+* **Email:** abhiroopgohar@gmail.com
+* **GitHub:** [@stark-069](https://github.com/stark-069)
