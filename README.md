@@ -5,13 +5,19 @@
 
 A highly optimized quantum compiler and simulation framework for observing Lattice Gauge Theories (LGTs) on near-term physical quantum hardware. 
 
-The HALO framework completely bypasses the severe $\mathcal{O}(N)$ circuit depth overheads associated with standard Jordan-Wigner transformations by natively mapping composite gauge links to the hardware topology. By achieving an asymptotic circuit depth of **$\mathcal{O}(1)$ per Trotter step**, this engine enables deep-time quantum simulations and variational ground-state preparation previously inaccessible on noisy processors.
+The HALO framework completely bypasses the severe $\mathcal{O}(N)$ circuit depth overheads associated with standard Jordan-Wigner transformations by natively mapping composite gauge links to the hardware topology. By achieving an asymptotic circuit depth of **$\mathcal{O}(1)$ per Trotter step**, this engine enables deep-time quantum simulations and variational ground-state preparation previously inaccessible on noisy processors (demonstrated on IBM Heron r2 architectures using native `cz` gates).
 
-This repository contains the core compiler library and the complete suite of benchmarking scripts used to generate the physics data for the associated publication.
+This repository contains the core compiler library, quickstart tutorials, and the complete suite of benchmarking scripts used to generate the physics data for the associated publication.
+
+## Hardware Specifications & Conventions (v2)
+To ensure absolute academic transparency and reproducibility, this repository and the associated manuscript adhere to the following hardware-level specifications:
+* **IBM Heron Architecture:** All physical QPU executions were routed to the 156-qubit `ibm_marrakesh` (20-qubit VQE, 10-qubit ZNE) and `ibm_fez` (16-qubit phase dynamics) processors.
+* **Native Basis Gates:** The compiler strictly optimizes for the IBM heavy-hex native basis `['cz', 'rz', 'sx', 'x']`.
+* **Qiskit Endianness:** All bitstrings, probability distributions, and statevectors strictly follow Qiskit's standard **little-endian** convention (i.e., qubit 0 is the rightmost bit: $\vert{}q_{N-1} \dots q_1 q_0\rangle$).
 
 ## Key Scientific & Algorithmic Achievements
 
-* **Constant-Depth Compilation:** Achieves true $\mathcal{O}(1)$ physical circuit depth per time-evolution step regardless of lattice size, vastly outperforming Jordan-Wigner mappings.
+* **Multi-Strategy Compiler Benchmarking:** Validated $\mathcal{O}(1)$ scaling against standard Jordan-Wigner and Explicit Gauge encodings at Qiskit Optimization Levels 1 and 3.
 * **16-Qubit Hardware Dynamics:** Successfully simulated the real-time dynamics of heavy meson string breaking on IBM's 16-qubit heavy-hex topologies.
 * **Dynamical Phase Diagrams:** Mapped the critical non-equilibrium phase transition between the non-perturbative Confinement Regime and the Kinetic Dispersion (Free Fermion) regime.
 * **Zero-Noise Extrapolation (ZNE):** Exploited the localized nature of the HALO mapped Pauli strings to achieve a noise scaling factor of $\lambda = 3$ with only a ~2.5x hardware depth penalty, recovering exact continuous-time physics.
@@ -21,7 +27,7 @@ This repository contains the core compiler library and the complete suite of ben
 ## Visual Benchmarks
 
 ### 1. The Compiler Duel: $\mathcal{O}(1)$ vs $\mathcal{O}(N)$ Scaling
-By bypassing non-local parity chains, HALO flatlines the critical path depth per Trotter step, allowing infinite scaling of the spatial lattice size without increasing decoherence.
+By bypassing non-local parity chains, HALO flatlines the critical path depth per Trotter step. This provides a massive hardware advantage over standard Jordan-Wigner transformations—dominating both baseline (unoptimized) and heavily optimized (Opt-Level 3) Qiskit transpilation pipelines—allowing for arbitrary scaling of the spatial lattice size without incurring depth-induced decoherence penalties.
 <p align="center">
   <img src="figures/readme_figures/poc1_compiler_duel.png" alt="Compiler Duel: HALO vs Jordan-Wigner" width="600"/>
 </p>
@@ -42,16 +48,20 @@ Unlike 1D string-to-qubit mappings, the HALO framework's localized composite lin
 
 ```text
 HALO-Engine/
-├── halo/                   # Core Python library
-│   ├── hamiltonian.py      # O(1) Hamiltonian builder
-│   ├── compiler.py         # Hardware-aware transpilation pipeline
-│   └── zne_folding.py      # Digital Zero-Noise Extrapolation logic
-├── benchmarks/             # Publication-grade execution scripts (Scaling, Dynamics, VQE)
-├── notebooks/              # Interactive environments
-│   └── halo_quickstart_tutorial.ipynb
-├── figures/                # Auto-generated outputs for plots and architectures
-├── requirements.txt        # Exact environment dependencies
-├── LICENSE                 # MIT Open Source License 
+├── data/                        # Historical IBM QPU execution logs
+│   └── halo_ibm_executions.json # Raw API Job IDs for 100% data provenance
+├── halo/                        # Core Python library
+│   ├── compiler.py              # Hardware-aware transpilation pipeline
+│   ├── hamiltonian.py           # O(1) Hamiltonian builder
+│   ├── mitigation.py            # Digital ZNE and Lindblad extrapolation
+│   └── vqe.py                   # Physics-informed interacting vacuum ansatz
+├── notebooks/                   # Interactive environments
+│   ├── halo_quickstart_tutorial.ipynb  # Intro to the HALO framework
+│   └── reproduce_figures.ipynb         # Historical API retrieval & reproduction
+├── benchmarks/                  # Publication-grade plotting and execution scripts
+├── figures/                     # Auto-generated outputs for plots and architectures
+├── requirements.txt             # Exact environment dependencies
+├── LICENSE                      # MIT Open Source License 
 └── README.md
 ```
 ## Quickstart
@@ -71,10 +81,16 @@ pip install -r requirements.txt
 ```bash
 jupyter notebook notebooks/halo_quickstart_tutorial.ipynb
 ```
-## Reproducing Publication Benchmarks
-To generate the exact figures, hardware scaling data, and VQE convergence sweeps from the paper, run any of the provided benchmark scripts from the root directory.
+## Reproducing Publication Benchmarks & QPU Data
+This repository guarantees Data Availability. You can reproduce the exact historical QPU measurements published in the manuscript using the IBM Quantum API.
+**To retrieve historical hardware data: **
+Launch Jupyter and open the reproduction notebook to fetch the original August 2026 measurements directly from the IBM Cloud using the job IDs stored in `data/halo_ibm_executions.json`:
+```bash
+jupyter notebook notebooks/reproduce_figures.ipynb
+```
 
-For example:
+**To generate analytical plots locally:**
+Run the standalone benchmarking scripts from the root directory (e.g., to generate Table I and Figure 1):
 
 ```bash
 python benchmarks/01_compiler_scaling_benchmark.py
