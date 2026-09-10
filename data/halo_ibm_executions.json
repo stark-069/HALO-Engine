@@ -1,0 +1,109 @@
+{
+  "project": "HALO Engine: Localized String Rupture on Quantum Hardware",
+  "author": "Abhiroop Gohar",
+  "institution": "Indian Institute of Technology Indore",
+  "experiments": {
+    "coherence_wall_saturation": {
+      "10_qubit_marrakesh": {
+        "description": "Unmitigated depth-scaling saturation sweep on 10 qubits (Figure 3a, Section IV.A). Sequence of 11 jobs corresponding to increasing Trotter depths.",
+        "backend": "ibm_marrakesh",
+        "qubits_used": 10,
+        "job_ids": [
+          "d96ltot2su3c739h4170",
+          "d96lpc8tcv6s73dju9tg",
+          "d96lo22f47jc73a5oha0",
+          "d96ln752su3c739h3q90",
+          "d96lmh8tcv6s73dju70g",
+          "d96llk2f47jc73a5oeq0",
+          "d96lk3otcv6s73dju4i0",
+          "d96ljb2f47jc73a5ocjg",
+          "d96lhbl2su3c739h3k8g",
+          "d96les52su3c739h3hm0",
+          "d96lchd2su3c739h3f6g"
+        ]
+      },
+      "16_qubit_fez": {
+        "description": "Unmitigated depth-scaling saturation sweep on 16 qubits at t=0.8 (Figure 3b, Section IV.A).",
+        "backend": "ibm_fez",
+        "qubits_used": 16,
+        "job_ids": [
+          "d96ch68tcv6s73djjsm0",
+          "d96ccc8tcv6s73djjnq0"
+        ]
+      }
+    },
+    "zero_noise_extrapolation": {
+      "description": "ZNE recovery data for the 10-qubit lattice utilizing unitary folding at t=0.5 (Figure 4, Section IV.B). 3 distinct runs corresponding to scale factors lambda = 1, 3, and 5.",
+      "backend": "ibm_marrakesh",
+      "qubits_used": 10,
+      "lambda_fold_job_ids": [
+        "d96m51qf47jc73a5ou50",
+        "d96m1r2f47jc73a5oqr0",
+        "d96m0iaf47jc73a5oplg"
+      ]
+    },
+    "dynamical_phase_transitions": {
+      "string_rupture_temporal_sweep": {
+        "description": "High-resolution trotterized time-evolution tracking the crossover of localized pair creation at t=0.790 (Figure 5, Section V.A).",
+        "backend": "ibm_fez",
+        "qubits_used": 16,
+        "shots": 4096,
+        "job_ids": [
+          "d9nlk30qs0bc73e3j44g"
+        ]
+      },
+      "deep_confinement_g5": {
+        "description": "Quantum quench dynamics of the heavy meson at strong coupling g=5 demonstrating unbroken coherent oscillations (Figure 6, Section V.B).",
+        "backend": "ibm_fez",
+        "qubits_used": 16,
+        "job_ids": [
+          "d9nll6gqs0bc73e3j59g",
+          "d9nllugqs0bc73e3j610"
+        ]
+      },
+      "phase_diagram_g_sweep": {
+        "description": "Parameter sweep of the coupling constant g locked at t=0.8 pinpointing the critical QLM boundary at gc=1.0 (Figure 7, Section V.C).",
+        "backend": "ibm_fez",
+        "qubits_used": 16,
+        "job_ids": [
+          "d9itq8abr2fc73e573ug"
+        ]
+      }
+    },
+    "variational_ground_state_20q": {
+      "description": "Unmitigated execution of the 20-qubit HALO-VQE ansatz demonstrating hardware depolarization collapse (Figure 8, Section VI.A). Full 28-step optimization trajectory.",
+      "backend": "ibm_marrakesh",
+      "qubits_used": 20,
+      "optimization_trajectory_job_ids": [
+        "d9tmgohdsedc73aj5n40",
+        "d9tmgivtfhrs73du66tg",
+        "d9tmgcvtfhrs73du66ng",
+        "d9tmg70pdb6s73e7efvg",
+        "d9tmg17pemts73cv4dt0",
+        "d9tmfr9dsedc73aj5m10",
+        "d9tmfl8pdb6s73e7efag",
+        "d9tmff8pdb6s73e7ef3g",
+        "d9tmf9ntfhrs73du65g0",
+        "d9tmf3vpemts73cv4cs0",
+        "d9tmetfpemts73cv4cgg",
+        "d9tmenopdb6s73e7ee6g",
+        "d9tmehopdb6s73e7ee00",
+        "d9tmec0pdb6s73e7edp0",
+        "d9tme69dsedc73aj5k20",
+        "d9tme00pdb6s73e7ed80",
+        "d9tmdnopdb6s73e7ecq0",
+        "d9tmdbpdsedc73aj5itg",
+        "d9tmd5npemts73cv4aj0",
+        "d9tmcuopdb6s73e7ebs0",
+        "d9tmcgvtfhrs73du622g",
+        "d9tm4ihdsedc73aj59t0",
+        "d9tm4c9dsedc73aj59kg",
+        "d9tm46fpemts73cv41hg",
+        "d9tm3unpemts73cv4190",
+        "d9tm3ohdsedc73aj5920",
+        "d9tm3j1dsedc73aj58s0",
+        "d9tm3dhdsedc73aj58m0"
+      ]
+    }
+  }
+}
